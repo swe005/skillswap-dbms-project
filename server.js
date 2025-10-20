@@ -1,20 +1,29 @@
-// Import required packages
 const express = require('express');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
-// Create an Express app
 const app = express();
 
-// Middleware to parse JSON data
+// Middleware
 app.use(bodyParser.json());
 
-// Test route to check if server works
+// Import routes
+const userRoutes = require('./routes/users');
+const skillRoutes = require('./routes/skills');
+const matchRoutes = require('./routes/matches');
+const feedbackRoutes = require('./routes/feedback');
+
+// Use routes
+app.use('/users', userRoutes);
+app.use('/skills', skillRoutes);
+app.use('/matches', matchRoutes);
+app.use('/feedback', feedbackRoutes);
+
+// Test route
 app.get('/', (req, res) => {
     res.send('SkillSwap API is running!');
 });
 
-// Define the port
+// Port
 const PORT = process.env.PORT || 3000;
-
-// Start the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
